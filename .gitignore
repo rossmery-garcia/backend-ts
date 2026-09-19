@@ -1,3 +1,7 @@
 dist
 node_modules
 .husky/_/
+
+.env
+.env.*
+!.env.example
