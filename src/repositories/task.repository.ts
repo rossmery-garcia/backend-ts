@@ -6,6 +6,10 @@ class TaskRepository {
   async create(data: CreateTaskDto) {
     return Task.create(data);
   }
+
+  async findAll() {
+    return Task.find();
+  }
 }
 
 export default new TaskRepository();
