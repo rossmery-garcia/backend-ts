@@ -18,6 +18,10 @@ class TaskService {
   async update(id: string, data: UpdateTaskDto) {
     return await TaskRepository.update(id, data);
   }
+
+  async delete(id: string) {
+    return await TaskRepository.delete(id);
+  }
 }
 
 export default new TaskService();

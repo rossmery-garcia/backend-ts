@@ -22,6 +22,10 @@ class TaskRepository {
       { returnDocument: 'after', runValidators: true },
     );
   }
+
+  async delete(id: string) {
+    return Task.findOneAndDelete({ _id: id });
+  }
 }
 
 export default new TaskRepository();
