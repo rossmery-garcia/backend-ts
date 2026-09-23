@@ -9,7 +9,7 @@ class TaskController {
 
       const task = await TaskService.create(newTask);
 
-      res.status(201).json({ data: task });
+      return res.status(201).json({ data: task });
     } catch (error) {
       res.status(500).json({ error });
     }
@@ -19,9 +19,39 @@ class TaskController {
     try {
       const tasks = await TaskService.findAll();
 
-      res.status(200).json({ data: tasks });
+      return res.status(200).json({ data: tasks });
     } catch (error) {
       res.status(500).json({ error });
+    }
+  }
+
+  async findById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      if (typeof id !== 'string') {
+        return res.status(400).json({
+          error: {
+            code: 'INVALID_ID',
+            message: 'Task ID is required',
+          },
+        });
+      }
+
+      const task = await TaskService.findById(id);
+
+      if (!task) {
+        return res.status(404).json({
+          error: {
+            code: 'NOT_FOUND',
+            message: 'Task not found',
+          },
+        });
+      }
+
+      return res.status(200).json({ data: task });
+    } catch (error) {
+      return res.status(500).json({ error });
     }
   }
 }

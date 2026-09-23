@@ -10,6 +10,10 @@ class TaskService {
   async findAll() {
     return await TaskRepository.findAll();
   }
+
+  async findById(id: string) {
+    return TaskRepository.findById(id);
+  }
 }
 
 export default new TaskService();

@@ -10,6 +10,10 @@ class TaskRepository {
   async findAll() {
     return Task.find();
   }
+
+  async findById(id: string) {
+    return Task.findOne({ _id: id });
+  }
 }
 
 export default new TaskRepository();
