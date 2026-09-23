@@ -7,5 +7,6 @@ const router = Router();
 router.post('/', TaskController.create);
 router.get('/', TaskController.findAll);
 router.get('/:id', TaskController.findById);
+router.patch('/:id', TaskController.update);
 
 export default router;

@@ -1,6 +1,6 @@
 import TaskRepository from '../repositories/task.repository';
 
-import type { CreateTaskDto } from '../dtos/task.dtos';
+import type { CreateTaskDto, UpdateTaskDto } from '../dtos/task.dtos';
 
 class TaskService {
   async create(data: CreateTaskDto) {
@@ -13,6 +13,10 @@ class TaskService {
 
   async findById(id: string) {
     return TaskRepository.findById(id);
+  }
+
+  async update(id: string, data: UpdateTaskDto) {
+    return await TaskRepository.update(id, data);
   }
 }
 

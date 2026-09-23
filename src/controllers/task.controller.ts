@@ -2,6 +2,8 @@ import type { Request, Response } from 'express';
 
 import TaskService from '../services/task.service';
 
+import type { UpdateTaskDto } from '../dtos/task.dtos';
+
 class TaskController {
   async create(req: Request, res: Response) {
     try {
@@ -39,6 +41,38 @@ class TaskController {
       }
 
       const task = await TaskService.findById(id);
+
+      if (!task) {
+        return res.status(404).json({
+          error: {
+            code: 'NOT_FOUND',
+            message: 'Task not found',
+          },
+        });
+      }
+
+      return res.status(200).json({ data: task });
+    } catch (error) {
+      return res.status(500).json({ error });
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      if (typeof id !== 'string') {
+        return res.status(400).json({
+          error: {
+            code: 'INVALID_ID',
+            message: 'Task ID is required',
+          },
+        });
+      }
+
+      const data: UpdateTaskDto = req.body;
+
+      const task = await TaskService.update(id, data);
 
       if (!task) {
         return res.status(404).json({

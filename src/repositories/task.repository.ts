@@ -1,6 +1,6 @@
 import Task from '../models/task.model';
 
-import type { CreateTaskDto } from '../dtos/task.dtos';
+import type { CreateTaskDto, UpdateTaskDto } from '../dtos/task.dtos';
 
 class TaskRepository {
   async create(data: CreateTaskDto) {
@@ -13,6 +13,14 @@ class TaskRepository {
 
   async findById(id: string) {
     return Task.findOne({ _id: id });
+  }
+
+  async update(id: string, data: UpdateTaskDto) {
+    return Task.findOneAndUpdate(
+      { _id: id },
+      { $set: data },
+      { returnDocument: 'after', runValidators: true },
+    );
   }
 }
 
