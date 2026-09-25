@@ -24,13 +24,13 @@ class AuthController {
     try {
       const data: LoginUserDto = req.body;
 
-      const user = await authService.login(data);
+      const authentication = await authService.login(data);
 
-      if (!user) {
+      if (authentication) {
         return res.status(401).json({ error: 'Usuario/contraseña incorrecto' });
       }
 
-      return res.status(200).json({ data: user });
+      return res.status(200).json({ data: authentication });
     } catch (error) {
       return res.status(500).json({ error });
     }

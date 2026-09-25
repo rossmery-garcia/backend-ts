@@ -2,7 +2,12 @@ import UserRepository from '../repositories/user.repository';
 
 import { hashPassword, comparePassword } from '../utils/password';
 
+import JwtService from '../services/jwt.service';
+
 import type { RegisterUserDto, CreateUserDto, LoginUserDto } from '../dtos/user.dtos';
+import type { AuthResponseDto } from '../dtos/auth.dtos';
+
+import toUserResponseDto from '../mappers/user.mapper';
 
 class AuthService {
   async register(data: RegisterUserDto) {
@@ -22,20 +27,30 @@ class AuthService {
     return UserRepository.create(userData);
   }
 
-  async login(data: LoginUserDto) {
+  async login(data: LoginUserDto): Promise<AuthResponseDto | null> {
     const user = await UserRepository.findByEmail(data.email);
 
     if (!user) {
       return null;
     }
 
-    const isPasswordMatch = await comparePassword(data.password, user.passwordHash);
+    const passwordMatch = await comparePassword(data.password, user.passwordHash);
 
-    if (!isPasswordMatch) {
+    if (!passwordMatch) {
       return null;
     }
 
-    return user;
+    const accessToken = JwtService.generateAccessToken(user.id);
+
+    const refreshToken = JwtService.generateRefreshToken(user.id);
+
+    const userResponse = toUserResponseDto(user);
+
+    return {
+      user: userResponse,
+      accessToken,
+      refreshToken,
+    };
   }
 }
 
