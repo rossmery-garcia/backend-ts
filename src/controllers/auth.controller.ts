@@ -26,7 +26,7 @@ class AuthController {
 
       const authentication = await authService.login(data);
 
-      if (authentication) {
+      if (!authentication) {
         return res.status(401).json({ error: 'Usuario/contraseña incorrecto' });
       }
 
