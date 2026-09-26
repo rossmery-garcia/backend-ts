@@ -5,7 +5,7 @@ import { hashPassword, comparePassword } from '../utils/password';
 import JwtService from '../services/jwt.service';
 
 import type { RegisterUserDto, CreateUserDto, LoginUserDto } from '../dtos/user.dtos';
-import type { AuthResponseDto } from '../dtos/auth.dtos';
+import type { AuthResponseDto, RefreshResponseDto } from '../dtos/auth.dtos';
 
 import toUserResponseDto from '../mappers/user.mapper';
 
@@ -50,6 +50,19 @@ class AuthService {
       user: userResponse,
       accessToken,
       refreshToken,
+    };
+  }
+
+  async refresh(refreshToken: string): Promise<RefreshResponseDto> {
+    const payload = JwtService.verifyRefreshToken(refreshToken);
+
+    const accessToken = JwtService.generateAccessToken(payload.sub);
+
+    const newRefreshToken = JwtService.generateRefreshToken(payload.sub);
+
+    return {
+      accessToken,
+      refreshToken: newRefreshToken,
     };
   }
 }

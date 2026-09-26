@@ -5,3 +5,12 @@ export interface AuthResponseDto {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface RefreshTokenDto {
+  refreshToken: string;
+}
+
+export interface RefreshResponseDto {
+  accessToken: string;
+  refreshToken: string;
+}
