@@ -3,28 +3,31 @@ import Task from '../models/task.model';
 import type { CreateTaskDto, UpdateTaskDto } from '../dtos/task.dtos';
 
 class TaskRepository {
-  async create(data: CreateTaskDto) {
-    return Task.create(data);
+  async create(userId: string, data: CreateTaskDto) {
+    return Task.create({
+      userId,
+      ...data,
+    });
   }
 
-  async findAll() {
-    return Task.find();
+  async findAll(userId: string) {
+    return Task.find({ userId });
   }
 
-  async findById(id: string) {
-    return Task.findOne({ _id: id });
+  async findById(userId: string, taskId: string) {
+    return Task.findOne({ _id: taskId, userId });
   }
 
-  async update(id: string, data: UpdateTaskDto) {
+  async update(userId: string, taskId: string, data: UpdateTaskDto) {
     return Task.findOneAndUpdate(
-      { _id: id },
+      { _id: taskId, userId },
       { $set: data },
       { returnDocument: 'after', runValidators: true },
     );
   }
 
-  async delete(id: string) {
-    return Task.findOneAndDelete({ _id: id });
+  async delete(userId: string, taskId: string) {
+    return Task.findOneAndDelete({ _id: taskId, userId });
   }
 }
 

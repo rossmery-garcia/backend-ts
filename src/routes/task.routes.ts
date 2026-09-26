@@ -6,8 +6,10 @@ import AuthenticationMiddleware from '../middlewares/authentication.middleware';
 
 const router = Router();
 
+router.use(AuthenticationMiddleware.authenticate);
+
 router.post('/', TaskController.create);
-router.get('/', AuthenticationMiddleware.authenticate, TaskController.findAll);
+router.get('/', TaskController.findAll);
 router.get('/:id', TaskController.findById);
 router.patch('/:id', TaskController.update);
 router.delete('/:id', TaskController.delete);

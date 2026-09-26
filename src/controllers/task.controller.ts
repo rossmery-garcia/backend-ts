@@ -9,7 +9,7 @@ class TaskController {
     try {
       const newTask = req.body;
 
-      const task = await TaskService.create(newTask);
+      const task = await TaskService.create(req.userId, newTask);
 
       return res.status(201).json({ data: task });
     } catch (error) {
@@ -19,7 +19,7 @@ class TaskController {
 
   async findAll(req: Request, res: Response) {
     try {
-      const tasks = await TaskService.findAll();
+      const tasks = await TaskService.findAll(req.userId);
 
       return res.status(200).json({ data: tasks });
     } catch (error) {
@@ -40,7 +40,7 @@ class TaskController {
         });
       }
 
-      const task = await TaskService.findById(id);
+      const task = await TaskService.findById(req.userId, id);
 
       if (!task) {
         return res.status(404).json({
@@ -72,7 +72,7 @@ class TaskController {
 
       const data: UpdateTaskDto = req.body;
 
-      const task = await TaskService.update(id, data);
+      const task = await TaskService.update(req.userId, id, data);
 
       if (!task) {
         return res.status(404).json({
@@ -102,7 +102,7 @@ class TaskController {
         });
       }
 
-      const task = await TaskService.delete(id);
+      const task = await TaskService.delete(req.userId, id);
 
       if (!task) {
         return res.status(404).json({
