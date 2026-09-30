@@ -1,16 +1,14 @@
+import type { z } from 'zod';
+
+import type { registerUserSchema, loginUserSchema } from '../schemas/auth.schemas';
+
+export type RegisterUserDto = z.infer<typeof registerUserSchema>;
+
+export type LoginUserDto = z.infer<typeof loginUserSchema>;
+
 export interface CreateUserDto {
   email: string;
   passwordHash: string;
-}
-
-export interface RegisterUserDto {
-  email: string;
-  password: string;
-}
-
-export interface LoginUserDto {
-  email: string;
-  password: string;
 }
 
 export interface UserResponseDto {

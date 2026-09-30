@@ -24,7 +24,9 @@ class AuthService {
       passwordHash,
     };
 
-    return UserRepository.create(userData);
+    const user = await UserRepository.create(userData);
+
+    return toUserResponseDto(user);
   }
 
   async login(data: LoginUserDto): Promise<AuthResponseDto | null> {

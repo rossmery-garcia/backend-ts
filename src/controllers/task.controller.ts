@@ -27,18 +27,9 @@ class TaskController {
     }
   }
 
-  async findById(req: Request, res: Response) {
+  async findById(req: Request<{ id: string }>, res: Response) {
     try {
       const { id } = req.params;
-
-      if (typeof id !== 'string') {
-        return res.status(400).json({
-          error: {
-            code: 'INVALID_ID',
-            message: 'Task ID is required',
-          },
-        });
-      }
 
       const task = await TaskService.findById(req.userId, id);
 
@@ -57,18 +48,9 @@ class TaskController {
     }
   }
 
-  async update(req: Request, res: Response) {
+  async update(req: Request<{ id: string }>, res: Response) {
     try {
       const { id } = req.params;
-
-      if (typeof id !== 'string') {
-        return res.status(400).json({
-          error: {
-            code: 'INVALID_ID',
-            message: 'Task ID is required',
-          },
-        });
-      }
 
       const data: UpdateTaskDto = req.body;
 
@@ -89,18 +71,9 @@ class TaskController {
     }
   }
 
-  async delete(req: Request, res: Response) {
+  async delete(req: Request<{ id: string }>, res: Response) {
     try {
       const { id } = req.params;
-
-      if (typeof id !== 'string') {
-        return res.status(400).json({
-          error: {
-            code: 'INVALID_ID',
-            message: 'Task ID is required',
-          },
-        });
-      }
 
       const task = await TaskService.delete(req.userId, id);
 

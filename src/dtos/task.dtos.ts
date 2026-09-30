@@ -1,13 +1,10 @@
-export interface CreateTaskDto {
-  title: string;
-  description: string;
-}
+import type { z } from 'zod';
 
-export interface UpdateTaskDto {
-  title?: string;
-  description?: string;
-  completed?: boolean;
-}
+import type { createTaskSchema, updateTaskSchema } from '../schemas/task.schemas';
+
+export type CreateTaskDto = z.infer<typeof createTaskSchema>;
+
+export type UpdateTaskDto = z.infer<typeof updateTaskSchema>;
 
 export interface TaskResponseDto {
   id: string;
