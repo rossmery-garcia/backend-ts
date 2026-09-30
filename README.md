@@ -2,7 +2,9 @@
 
 A REST API built with Node.js, TypeScript, Express, MongoDB and Mongoose.
 
-This project is a simple Todo List API designed as a reference implementation for building a maintainable Node.js backend following common industry practices for project structure, configuration, code quality, and maintainability.
+This project is a reference implementation of a maintainable Node.js backend following common industry practices for project structure, validation, authentication, separation of responsibilities, code quality, and maintainability.
+
+The API provides user authentication with JWT and CRUD operations for user-owned tasks.
 
 ## Tech Stack
 
@@ -11,6 +13,8 @@ This project is a simple Todo List API designed as a reference implementation fo
 - [Express.js](https://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [Mongoose](https://mongoosejs.com/docs/index.html)
+- [Zod](https://zod.dev/)
+- [JWT](https://www.npmjs.com/package/jsonwebtoken)
 
 ## Prerequisites
 
@@ -71,11 +75,16 @@ The project follows a layered architecture to keep responsibilities separated an
 ├── src/
 │   ├── config/
 │   ├── controllers/
+│   ├── dtos/
+│   ├── mappers/
 │   ├── middlewares/
+│   ├── models/
 │   ├── repositories/
 │   ├── routes/
 │   ├── schemas/
 │   ├── services/
+│   ├── types/
+│   ├── utils/
 │   ├── app.ts
 │   └── index.ts
 ├── .env.example
@@ -85,7 +94,7 @@ The project follows a layered architecture to keep responsibilities separated an
 
 ## Code Quality
 
-This project enforces code quality, consistency, and maintainability using the following tools:
+This project uses the following tools to maintain code quality, consistency, and development standards:
 
 - **ESLint** enforces coding standards and helps identify potential code issues.
 - **Prettier** ensures consistent code formatting across the codebase
